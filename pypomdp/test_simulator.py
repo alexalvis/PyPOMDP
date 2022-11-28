@@ -11,6 +11,7 @@ from models import RockSampleModel, Model
 from solvers import POMCP, PBVI
 from parsers import PomdpParser, GraphViz
 from logger import Logger as log
+import numpy as np
 
 class Simulator():
     def __init__(self, params):
@@ -72,6 +73,32 @@ class Simulator():
             Max Play: {}
         ++++++++++++++++++++++'''.format(model.curr_state, budget, belief, T, params.max_play))
         
+        traj = []
+        traj.append(model.curr_state)
         for i in range(params.max_play):
             actions = model.get_legal_actions(model.curr_state)
-            action = choose_action(actions)
+            action = random_choose_action(actions)
+            new_state, obs, reward, cost = model.take_action(action)
+            traj.append(action)
+            traj.append(model.curr_state)
+            total_rewards += reward
+            budget -= cost
+            
+            log.info('\n'.join([
+              'Taking action: {}'.format(action),
+              'Observation: {}'.format(obs),
+              'Reward: {}'.format(reward),
+              'Budget: {}'.format(budget),
+              'New state: {}'.format(new_state),
+              # 'New Belief: {}'.format(belief),
+              '=' * 20
+            ]))
+
+            if budget <= 0:
+                log.info('Budget spent.')
+                break
+        return traj
+def random_choose_action(actions):
+    index = np.random.choice(len(actions), 1)[0]
+    return actions[index]
+    
