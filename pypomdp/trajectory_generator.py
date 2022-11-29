@@ -29,5 +29,8 @@ if __name__ == "__main__":
     
     with open(params.algo_config) as algo_config:
         algo_params = json.load(algo_config)
-        simulator = Simulator(params)
-        traj = simulator.simulate(**algo_params)
+        trajlist = []
+        for i in range(10):
+            simulator = Simulator(params)
+            traj = simulator.simulate(**algo_params)
+            trajlist.append(traj)
