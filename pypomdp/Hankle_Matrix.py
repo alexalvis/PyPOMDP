@@ -14,8 +14,7 @@ def Hankel_Matrix(filename):
     
     est = Spectral()
     est.fit(train.data)
-    print(train.data)
-    lhankel = Hankel( sample_instance=train.sample,
+    lhankel = Hankel( sample_instance=train.data,
                      nbL=train.nbL, nbEx=train.nbEx, 
                      lrows=6, lcolumns=6, version="classic", 
                      partial=True, sparse=True, mode_quiet=True).lhankel
