@@ -12,6 +12,7 @@ import multiprocessing
 from pomdp_runner import PomdpRunner
 from util import RunnerParams
 from test_simulator import Simulator
+import DataTrasnfer
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Solve pomdp')
@@ -34,3 +35,7 @@ if __name__ == "__main__":
             simulator = Simulator(params)
             traj = simulator.simulate(**algo_params)
             trajlist.append(traj)
+    st_len = 8  #Change this based on different environment configuration.
+    transferred_data, symbol_dict = DataTrasnfer.data_transfer(trajlist, st_len)
+    store_file = "Test_store.json"
+    DataTrasnfer.store_json(transferred_data, store_file)
