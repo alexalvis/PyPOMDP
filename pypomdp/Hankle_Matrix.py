@@ -20,7 +20,7 @@ def Hankel_Matrix(filename):
     # print(train.fact)
     lhankel = Hankel( sample_instance=None, 
                       lrows=6, lcolumns=6, version="classic", 
-                      partial=True, sparse=True, mode_quiet=True).lhankel
+                      partial=True, sparse=False, mode_quiet=True).lhankel
     return train
     return lhankel
 
