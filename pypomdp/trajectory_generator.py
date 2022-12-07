@@ -31,11 +31,11 @@ if __name__ == "__main__":
     with open(params.algo_config) as algo_config:
         algo_params = json.load(algo_config)
         trajlist = []
-        for i in range(10):
+        for i in range(100):
             simulator = Simulator(params)
             traj = simulator.simulate(**algo_params)
             trajlist.append(traj)
     st_len = 8  #Change this based on different environment configuration.
     transferred_data, symbol_dict = DataTrasnfer.data_transfer(trajlist, st_len)
-    store_file = "Test_store.json"
+    store_file = "Test_store_noact.json"
     DataTrasnfer.store_json(transferred_data, store_file)

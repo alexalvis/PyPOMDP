@@ -11,21 +11,23 @@ from splearn  import Hankel
 from splearn.automaton import Automaton
 
 def Hankel_Matrix(filename):
-    train = load_data_sample(filename)
+    train = load_data_sample(adr = filename)
     
     est = Spectral()
-    est.set_params(lrows = 3, lcolumns = 3, smooth_method = 'trigram', version = 'factor', rank = 8)
-    est.fit(train.data)
+    # est.set_params(lrows = 3, lcolumns = 3, smooth_method = 'trigram', version = 'factor', rank = 8)
+    est.fit(X = train.data)
     # print(est.automaton.transitions)
     # print(train.fact)
-    lhankel = Hankel( sample_instance=None, 
-                      lrows=6, lcolumns=6, version="classic", 
-                      partial=True, sparse=False, mode_quiet=True).lhankel
-    return train
-    return lhankel
+    lhankel = est.hankel
+    # WA = est.automaton
+    WA = lhankel.to_automaton(rank = 8)
+    print(WA.transitions)
+    
+    return lhankel, WA
 
 if __name__ == "__main__":
-    filename = "Test_store.json"
-    auto = Automaton.SimpleExample()
-    print(auto.transitions)
-    lhankel = Hankel_Matrix(filename)   
+    filename = "Test_store_noact.json"
+    # filename = "0.spice.train"
+    # auto = Automaton.SimpleExample()
+    # print(auto.transitions)
+    lhankel, WA = Hankel_Matrix(filename)

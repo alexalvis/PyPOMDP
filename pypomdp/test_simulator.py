@@ -79,7 +79,7 @@ class Simulator():
             actions = model.get_legal_actions(model.curr_state)
             action = random_choose_action(actions)
             new_state, obs, reward, cost = model.take_action(action)
-            traj.append(action)
+            # traj.append(action)  #Add this to record actions
             traj.append(model.curr_state)
             total_rewards += reward
             budget -= cost
